@@ -3,15 +3,14 @@ import {ref} from 'vue'
 import DynamicInput from './DynamicInput.vue'
 import type {Column} from '@/types'
 import { PlusIcon, XMarkIcon } from '@heroicons/vue/24/solid'
+import { useTaskBoard } from '@/stores/useTaskBoardStore'
 
 const columnName = ref<string>("");
 const isFormVisible= ref<boolean>(false);
 const isError = ref<boolean>(false);
-const columns = ref<Column[]>([])
+const taskBoardStore = useTaskBoard()
 
-  const addColumn = (column: Column) => {
-    columns.value = [...columns.value, column]
-  }
+const addColumn = taskBoardStore.addColumn
 
     const handleAddColumnClick = () => {
       if (!isInputInvalid()) {
