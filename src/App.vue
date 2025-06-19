@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import AddColumn from './components/AddColumn.vue'
+import ColumnForm from './components/ColumnForm.vue';
+import ColumnList from './components/ColumnList.vue';
 </script>
 
 <template>
 <main>
-  <div>
-    <div>
-      <AddColumn />
+    <div class="flex items-start ml-2 mt-12">
+      <div>
+        <ColumnForm />
+      </div>
     </div>
-  </div>
 </main>
 </template>
+
 

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue'
-
 const props = defineProps({
   errorMessage: String,
   isError: Boolean,
@@ -27,7 +25,7 @@ const updateValue = (value: string) => {
   <div class="relative pb-6">
     <input
       v-if="variant === 'input'"
-      class="w-full bg-white border border-blue-300 text-gray-900 rounded-xl focus:outline-blue-400 p-2"
+      class="w-full bg-white border-1 border-blue-300 text-gray-800 rounded-xl focus:outline-blue-500 p-2"
       type="text"
       :value="modelValue"
       @input="updateValue(($event.target as HTMLInputElement).value)"
@@ -36,7 +34,7 @@ const updateValue = (value: string) => {
 
     <textarea
       v-else-if="props.variant === 'textarea'"
-      class="w-full bg-white border border-blue-300 text-gray-900 rounded-xl focus:outline-blue-400 resize-none p-2"
+      class="w-full bg-white border-1 border-blue-300 text-gray-800 rounded-xl focus:outline-blue-500 resize-none p-2"
       :value="props.modelValue"
       @input="updateValue(($event.target as HTMLTextAreaElement).value)"
       :placeholder="props.placeholder"
