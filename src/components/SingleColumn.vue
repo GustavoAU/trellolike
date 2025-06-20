@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ElementHeader from './ElementHeader.vue'
 import { useTaskBoard } from '@/stores/useTaskBoardStore'
+import AddTaskForm from './AddTaskForm.vue'
 
 type ColumnDetailsProps = {
   id: string
@@ -24,7 +25,9 @@ const removeColumn  = taskBoardStore.removeColumn
         :title="`${columnDetails.name}`"
         @remove="removeColumn(columnDetails.id)"
       />
-
+    </div>
+    <div>
+      <AddTaskForm :columnId="columnDetails.id" />
     </div>
 
   </div>
