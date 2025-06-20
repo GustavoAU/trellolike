@@ -2,6 +2,8 @@
 import { ref } from 'vue'
 import DynamicInput from './DynamicInput.vue'
 import { PlusIcon, XMarkIcon } from '@heroicons/vue/24/solid'
+import type { Task } from '@/types'
+import { useTaskBoard } from '@/stores/useTaskBoardStore'
 
 defineProps<{ columnId: string }>()
 
@@ -10,13 +12,28 @@ const inputAssignee = ref('')
 const areaComment = ref('')
 const isError = ref({ inputName: false, inputAssignee: false, areaComment: false })
 const isTaskVisible = ref(true)
+const taskBoardStore = useTaskBoard()
+const addTask  = taskBoardStore.addTask
+
 
 
 const handleAddTaskClick = (columnId: string) => {
   if (isInputInvalid()) {
     return
   }
-}
+  const newTask: Task = {
+    id: crypto.randomUUID(),
+    title: inputName.value,
+    assignee: inputAssignee.value,
+    comment: areaComment.value,
+  }
+
+  addTask({columnId, task: newTask})
+  inputName.value = ''
+  inputAssignee.value = ''
+  areaComment.value = ''
+  console.log('Task added:', newTask)
+};
 
 
 const isInputInvalid = () => {
