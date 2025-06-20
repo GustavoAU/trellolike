@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import type { ColumnDetails } from '@/types'
 import ElementHeader from './ElementHeader.vue'
 import { useTaskBoard } from '@/stores/useTaskBoardStore'
 
-const { columnDetails } = defineProps<{ columnDetails: ColumnDetails }>()
+type ColumnDetailsProps = {
+  id: string
+  name: string
+}
+
+const { columnDetails } = defineProps<{ columnDetails: ColumnDetailsProps }>()
 
 const taskBoardStore = useTaskBoard()
 const removeColumn  = taskBoardStore.removeColumn

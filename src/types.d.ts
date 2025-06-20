@@ -3,7 +3,4 @@ export type Column = {
   name: string
 }
 
-export type ColumnDetails = {
-  id: string
-  name: string
-}
+
