@@ -12,11 +12,15 @@ export const useTaskBoard = defineStore('TaskBoard', () => {
     columns.value = [...columns.value, column]
   }
 
-
+    const removeColumn = (columnId: string) => {
+      const newColumns = columns.value.filter((column) => column.id !== columnId)
+      columns.value = newColumns
+    };
 
   return {
     columns,
     getColumns,
     addColumn,
+    removeColumn
   }
 })
