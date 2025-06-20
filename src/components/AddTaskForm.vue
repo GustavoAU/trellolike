@@ -82,12 +82,11 @@ const toggleIsTaskIsVisible = (value: boolean) => {
     <div class="flex">
       <button
         @click="handleAddTaskClick(columnId)"
-        class="bg-[#6AC9FF] text-[#C4E5F8] font-bold py-2 px-4 rounded-xl focus:outline-none focus:shadow-outline shadow-md transform hover:bg-[#42B9FD] hover:text-white hover:shadow-lg transition duration-300 ease-in-out mt-1.5 cursor-pointer"
-      >
+        class="bg-sky-400 text-sky-100 font-bold py-2 px-4 rounded-xl focus:outline-none focus:shadow-outline shadow-md transform hover:bg-sky-500 hover:text-white hover:shadow-lg transition duration-300 ease-in-out mb-4 cursor-pointer">
         Add Task
       </button>
       <button @click="toggleIsTaskIsVisible(false)" class="cursor-pointer">
-        <XMarkIcon class="w-6 ml-2 mt-2 text-center" />
+        <XMarkIcon class="w-6 ml-2 mb-4 text-center" />
       </button>
     </div>
   </div>
@@ -96,7 +95,7 @@ const toggleIsTaskIsVisible = (value: boolean) => {
       @click="toggleIsTaskIsVisible(true)"
       class="flex hover:bg-primary-lightest py-2 px-4 rounded-xl"
     >
-      <PlusIcon class="w-5 mr-2" /> Add another task
+      <PlusIcon class="w-5 mr-2" /> Add task
     </button>
   </div>
 </template>
