@@ -1,8 +1,9 @@
 <script setup lang="ts" >
 import {ref} from 'vue'
+import { PlusIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import DynamicInput from './DynamicInput.vue'
-import { useTaskBoard } from '@/stores/useTaskBoardStore'
 import type {Column} from '@/types'
+import { useTaskBoard } from '@/stores/useTaskBoardStore'
 
 const columnName = ref<string>("");
 const isFormVisible= ref<boolean>(false);

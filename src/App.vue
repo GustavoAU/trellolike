@@ -7,6 +7,9 @@ import ColumnList from './components/ColumnList.vue';
 <main>
     <div class="flex items-start ml-2 mt-12">
       <div>
+        <ColumnList />
+      </div>
+      <div>
         <ColumnForm />
       </div>
     </div>
