@@ -3,4 +3,11 @@ export type Column = {
   name: string
 }
 
+export type Task = {
+  id: string
+  title: string
+  assignee: string
+  comment: string
+}
+
 
