@@ -8,25 +8,25 @@ import { ref } from 'vue'
 
 type ColumnDetailsProps = {
   id: string
-  name: string
+  title: string
 }
 
 const { columnDetails } = defineProps<{ columnDetails: ColumnDetailsProps }>()
 
-const isConfirmVisible = ref(false)
+const isConfirmVisible = ref<boolean>(false)
 
 const taskBoardStore = useTaskBoard()
 const removeColumn  = taskBoardStore.removeColumn
 
-const confirmRemove = () => {
+const confirmRemove = ():void => {
   removeColumn(columnDetails.id)
   isConfirmVisible.value = false
 }
 
-const cancelRemove = () => {
+const cancelRemove = ():void => {
   isConfirmVisible.value = false
 }
-const handleRemoveRequest = () => {
+const handleRemoveRequest = ():void => {
   isConfirmVisible.value = true
 }
 
@@ -39,7 +39,7 @@ const handleRemoveRequest = () => {
   >
     <div class="p-2">
       <ElementHeader
-        :title="`${columnDetails.name}`"
+        :title="`${columnDetails.title}`"
         @remove="handleRemoveRequest"
       />
     <transition

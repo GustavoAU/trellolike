@@ -2,8 +2,12 @@
 import {ref} from 'vue'
 import { PlusIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import DynamicInput from './DynamicInput.vue'
-import type {Column} from '@/types'
 import { useTaskBoard } from '@/stores/useTaskBoardStore'
+
+type Column = {
+  id: string
+  title: string
+}
 
 const columnName = ref<string>("");
 const isFormVisible= ref<boolean>(false);
@@ -12,22 +16,22 @@ const taskBoardStore = useTaskBoard()
 
 const addColumn = taskBoardStore.addColumn
 
-    const handleAddColumnClick = () => {
+    const handleAddColumnClick = ():void => {
       if (!isInputInvalid()) {
         const newColumn: Column = {
           id: crypto.randomUUID(),
-          name: columnName.value,
+          title: columnName.value,
         }
         addColumn(newColumn)
         columnName.value = ''
       }
 
     }
-    const toggleIsFormVisible = (value: boolean) => {
+    const toggleIsFormVisible = (value: boolean):void => {
       isFormVisible.value = value
     }
 
-    const isInputInvalid = () => {
+    const isInputInvalid = ():boolean => {
         isError.value = columnName.value.trim().length === 0
       return columnName.value.trim().length === 0
     }

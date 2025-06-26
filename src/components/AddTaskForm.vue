@@ -2,22 +2,32 @@
 import { ref } from 'vue'
 import DynamicInput from './DynamicInput.vue'
 import { PlusIcon, XMarkIcon } from '@heroicons/vue/24/solid'
-import type { Task } from '@/types'
 import { useTaskBoard } from '@/stores/useTaskBoardStore'
+
+type Task = {
+  id: string
+  title: string
+  assignee: string
+  comment: string
+}
 
 defineProps<{ columnId: string }>()
 
-const inputName = ref('')
-const inputAssignee = ref('')
-const areaComment = ref('')
-const isError = ref({ inputName: false, inputAssignee: false, areaComment: false })
-const isTaskVisible = ref(true)
+const inputName = ref<string>('')
+const inputAssignee = ref<string>('')
+const areaComment = ref<string>('')
+const isError = ref<{ inputName: boolean; inputAssignee: boolean; areaComment: boolean }>({
+  inputName: false,
+  inputAssignee: false,
+  areaComment: false,
+})
+const isTaskVisible = ref<boolean>(true)
 const taskBoardStore = useTaskBoard()
 const addTask  = taskBoardStore.addTask
 
 
 
-const handleAddTaskClick = (columnId: string) => {
+const handleAddTaskClick = (columnId: string):void => {
   if (isInputInvalid()) {
     return
   }
@@ -36,7 +46,7 @@ const handleAddTaskClick = (columnId: string) => {
 };
 
 
-const isInputInvalid = () => {
+const isInputInvalid = ():boolean => {
   isError.value = {
     inputName: inputName.value.trim().length === 0,
     inputAssignee: inputAssignee.value.trim().length === 0,
@@ -49,7 +59,7 @@ const isInputInvalid = () => {
   )
 }
 
-const toggleIsTaskIsVisible = (value: boolean) => {
+const toggleIsTaskIsVisible = (value: boolean):void => {
   isTaskVisible.value = value
 }
 </script>
