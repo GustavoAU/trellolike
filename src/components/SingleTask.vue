@@ -1,5 +1,12 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import ElementHeader from './ElementHeader.vue'
+import ConfirmationBox from './ConfirmationBox.vue'
+
+const emit = defineEmits<{
+  (e: 'removeTask', task: { id: string, title: string, assignee: string, comment: string }): void
+}>()
+
 
 const props = defineProps<{
   task: {
@@ -9,6 +16,22 @@ const props = defineProps<{
     comment: string
   }
 }>()
+
+const isConfirmVisible = ref(false)
+
+
+const confirmRemove = ():void => {
+  emit('removeTask', props.task)
+  isConfirmVisible.value = false
+}
+
+const cancelRemove = ():void => {
+  isConfirmVisible.value = false
+}
+const handleRemoveRequest = ():void => {
+  isConfirmVisible.value = true
+}
+
 </script>
 
 <template>
@@ -16,8 +39,21 @@ const props = defineProps<{
     class="SingleTask text-[#222] w-full bg-primary-dark p-2 mb-20 mt-10 rounded-xl shadow-md transform hover:shadow-lg transition duration-300 ease-in-out"
   >
     <ElementHeader
-      :title="`${props.task.title}`"
+    @remove="handleRemoveRequest"
+    :title="`${props.task.title}`"
     />
+    <transition
+        name="fade-scale"
+        appear
+      >
+      <ConfirmationBox
+        v-if="isConfirmVisible"
+        title="Are you sure?"
+        message="you will remove all associated task. Continue?"
+        @confirm="confirmRemove"
+        @cancel="cancelRemove"
+      />
+    </transition>
     <p>Assignee: {{ task.assignee }}</p>
     <p>Comment: {{ task.comment }}</p>
   </div>

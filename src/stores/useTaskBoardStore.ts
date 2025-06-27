@@ -37,7 +37,10 @@ export const useTaskBoard = defineStore('TaskBoard', () => {
     tasks.value = { ...tasks.value, [columnId]: newColumnTasks }
   }
 
-
+  const removeTask = ({columnId,task}: { columnId: string; task: Task }): void => {
+    const newColumnsTasks = tasks.value[columnId].filter(taskItem => taskItem.id !== task.id)
+    tasks.value = { ...tasks.value, [columnId]: newColumnsTasks }
+  }
 
   return {
     columns,
@@ -45,6 +48,8 @@ export const useTaskBoard = defineStore('TaskBoard', () => {
     addColumn,
     removeColumn,
     addTask,
-    tasks
+    tasks,
+    removeTask
   }
+
 })
