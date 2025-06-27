@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ElementHeader from './ElementHeader.vue'
 import { useTaskBoard } from '@/stores/useTaskBoardStore'
-import AddTaskForm from './AddTaskForm.vue'
+import TaskList from './TaskList.vue'
 import ConfirmationBox from './ConfirmationBox.vue'
 import { ref } from 'vue'
 
@@ -42,6 +42,7 @@ const handleRemoveRequest = ():void => {
         :title="`${columnDetails.title}`"
         @remove="handleRemoveRequest"
       />
+      <TaskList :columnId="columnDetails.id" />
     <transition
         name="fade-scale"
         appear
@@ -56,10 +57,6 @@ const handleRemoveRequest = ():void => {
     </transition>
 
     </div>
-    <div>
-      <AddTaskForm :columnId="columnDetails.id" />
-    </div>
-
   </div>
 </template>
 

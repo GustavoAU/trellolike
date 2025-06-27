@@ -16,7 +16,7 @@ export const useTaskBoard = defineStore('TaskBoard', () => {
 
 
   const columns = ref<Column[]>([])
-  const tasks = ref<Record<string, Task[]>>({})
+ const tasks = ref<Record<string, Task[]>>({})
 
   const getColumns = computed(() => columns.value)
 
@@ -27,7 +27,8 @@ export const useTaskBoard = defineStore('TaskBoard', () => {
   const removeColumn = (columnId: string): void => {
     const newColumns = columns.value.filter((column) => column.id !== columnId)
     columns.value = newColumns
-    const { [columnId]: removed, ...rest } = tasks.value
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { [columnId]: _removed, ...rest } = tasks.value
     tasks.value = { ...rest }
   }
 
@@ -36,11 +37,14 @@ export const useTaskBoard = defineStore('TaskBoard', () => {
     tasks.value = { ...tasks.value, [columnId]: newColumnTasks }
   }
 
+
+
   return {
     columns,
     getColumns,
     addColumn,
     removeColumn,
-    addTask
+    addTask,
+    tasks
   }
 })
