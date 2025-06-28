@@ -42,7 +42,6 @@ const handleAddTaskClick = (columnId: string):void => {
   inputName.value = ''
   inputAssignee.value = ''
   areaComment.value = ''
-  console.log('Task added:', newTask)
 };
 
 
