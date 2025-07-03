@@ -27,8 +27,9 @@ export const useTaskBoard = defineStore('TaskBoard', () => {
   const removeColumn = (columnId: string): void => {
     const newColumns = columns.value.filter((column) => column.id !== columnId)
     columns.value = newColumns
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { [columnId]: _removed, ...rest } = tasks.value
+
+     // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { [columnId]: _, ...rest } = tasks.value
     tasks.value = { ...rest }
   }
 

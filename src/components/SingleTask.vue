@@ -49,7 +49,7 @@ const handleRemoveRequest = ():void => {
       <ConfirmationBox
         v-if="isConfirmVisible"
         title="Are you sure?"
-        message="you will remove all associated task. Continue?"
+        message="You are about to remove this task. Continue?"
         @confirm="confirmRemove"
         @cancel="cancelRemove"
       />
