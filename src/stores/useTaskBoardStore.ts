@@ -43,6 +43,8 @@ export const useTaskBoard = defineStore('TaskBoard', () => {
     tasks.value = { ...tasks.value, [columnId]: newColumnsTasks }
   }
 
+  
+
   return {
     columns,
     getColumns,

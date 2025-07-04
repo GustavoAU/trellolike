@@ -5,6 +5,7 @@ import SingleTask from './SingleTask.vue'
 import { useTaskBoard } from '../stores/useTaskBoardStore'
 
 
+
 const props = defineProps<{ columnId: string }>()
 
 const taskBoardStore = useTaskBoard()
