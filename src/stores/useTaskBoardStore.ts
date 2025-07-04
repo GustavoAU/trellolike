@@ -16,7 +16,7 @@ export const useTaskBoard = defineStore('TaskBoard', () => {
 
 
   const columns = ref<Column[]>([])
- const tasks = ref<Record<string, Task[]>>({})
+  const tasks = ref<Record<string, Task[]>>({})
 
   const getColumns = computed(() => columns.value)
 
@@ -44,6 +44,8 @@ export const useTaskBoard = defineStore('TaskBoard', () => {
   }
 
   
+
+
 
   return {
     columns,
