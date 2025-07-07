@@ -43,7 +43,12 @@ export const useTaskBoard = defineStore('TaskBoard', () => {
     tasks.value = { ...tasks.value, [columnId]: newColumnsTasks }
   }
 
-  
+  const editColumn = (columnID: string, updatedColumn: Column): void => {
+    const columnIndex = columns.value.findIndex(col => col.id === columnID)
+    if (columnIndex !== -1) {
+      columns.value[columnIndex] = { ...updatedColumn }
+    }
+  }
 
 
 
@@ -54,7 +59,8 @@ export const useTaskBoard = defineStore('TaskBoard', () => {
     removeColumn,
     addTask,
     tasks,
-    removeTask
+    removeTask,
+    editColumn
   }
 
 })
