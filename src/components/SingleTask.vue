@@ -32,15 +32,18 @@ const handleRemoveRequest = ():void => {
   isConfirmVisible.value = true
 }
 
+
 </script>
 
 <template>
   <div
-    class="SingleTask text-gray-800 w-full bg-primary-dark p-2 mb-20 mt-10 rounded-xl shadow-md transform hover:shadow-lg transition duration-300 ease-in-out"
+    class="SingleTask text-gray-800 w-full bg-primary-dark p-2 mb-10 mt-6 rounded-xl shadow-md transform hover:shadow-lg transition duration-300 ease-in-out"
   >
     <ElementHeader
+    :type= "'task'"
+    :title="props.task.title"
     @remove="handleRemoveRequest"
-    :title="`${props.task.title}`"
+
     />
     <transition
         name="fade-scale"

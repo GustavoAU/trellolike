@@ -21,7 +21,7 @@ const isError = ref<{ inputName: boolean; inputAssignee: boolean; areaComment: b
   inputAssignee: false,
   areaComment: false,
 })
-const isTaskVisible = ref<boolean>(true)
+const isTaskVisible = ref<boolean>(false)
 const taskBoardStore = useTaskBoard()
 const addTask  = taskBoardStore.addTask
 

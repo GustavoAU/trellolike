@@ -30,9 +30,11 @@ const handleRemoveRequest = ():void => {
   isConfirmVisible.value = true
 }
 
-function handleEditTitle(newTitle: string) {
+const handleEditColumn = (payload: {title:string}):void => {
   if (columnDetails.value) {
-    taskBoardStore.editColumn(columnDetails.value.id, { id: columnDetails.value.id, title: newTitle })
+    taskBoardStore.editColumn(columnDetails.value.id, {
+      id: columnDetails.value.id,
+      title: payload.title })
   }
 }
 </script>
@@ -43,9 +45,10 @@ function handleEditTitle(newTitle: string) {
     class="SingleColumn flex flex-col mx-4 w-80 px-4 py-2 bg-primary-light rounded-2xl shadow-md transform hover:shadow-xl transition duration-300 ease-in-out">
     <div class="p-2">
       <ElementHeader
+        :type="'column'"
         :title="columnDetails?.title"
         @remove="handleRemoveRequest"
-        @edit="handleEditTitle"
+        @editColumn="handleEditColumn"
       />
     </div>
     <TaskList :columnId="columnDetails?.id" />
