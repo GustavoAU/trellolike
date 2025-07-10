@@ -36,7 +36,10 @@ const handleRemoveTask = (task: { id: string, title: string, assignee: string, c
       </template>
     </draggable>
 
-    <AddTaskForm :columnId="props.columnId" />
+    <AddTaskForm
+    :columnId="props.columnId"
+    :class="taskBoardStore.tasks[props.columnId]?.length ? 'mt-20' : 'mt-0'"
+  />
 
   </div>
 </template>

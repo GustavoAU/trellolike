@@ -13,7 +13,7 @@ const { getColumns } = storeToRefs(taskBoardStore)
 <template>
   <div class="ColumnListContainer flex flex-col items-center mt-4">
     <div v-if="getColumns.length > 0" class="ColumnList flex items-start px-2">
-      <SingleColumn v-for="column in getColumns" :key="column.id" :columnDetails="column" />
+      <SingleColumn v-for="column in getColumns" :key="column.id" :columnId="column.id" />
     </div>
     <p v-else class="text-md text-gray-400 text-center">There are no columns, add one</p>
   </div>
