@@ -72,6 +72,7 @@ const toggleIsTaskIsVisible = (value: boolean):void => {
       :isError="isError.inputName"
       placeholder="Insert task"
       errorMessage="Please fill out this field."
+      @focus="inputName = ''"
     />
 
     <DynamicInput
@@ -102,7 +103,7 @@ const toggleIsTaskIsVisible = (value: boolean):void => {
   <div v-else>
     <button
       @click="toggleIsTaskIsVisible(true)"
-      class="flex hover:bg-primary-lightest py-2 px-4 rounded-xl"
+      class="flex  hover:bg-primary-lightest py-1 px-2 rounded-xl cursor-pointer"
     >
       <PlusIcon class="w-5 mr-2" /> Add task
     </button>

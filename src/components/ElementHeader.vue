@@ -73,7 +73,7 @@ const cancelEdit = ():void => {
     <div class="flex items-center gap-2">
       <template v-if="!isEditing">
         <h3
-          class="text-gray-800 font-bold cursor-pointer"
+          class="text-gray-800 font-bold cursor-pointer ml-1"
           @dblclick="startEdit"
         >
           {{ props.title }}

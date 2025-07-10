@@ -47,6 +47,7 @@ const addColumn = taskBoardStore.addColumn
         :isError="isError"
         errorMessage="Please fill out this field."
         placeholder="List name"
+        @keyup.enter="handleAddColumnClick"
       />
       <div class="flex items-center justify-start">
         <button
