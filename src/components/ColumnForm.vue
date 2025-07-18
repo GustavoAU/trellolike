@@ -16,7 +16,7 @@ const taskBoardStore = useTaskBoard()
 
 const addColumn = taskBoardStore.addColumn
 
-    const handleAddColumnClick = ():void => {
+    const addNewColumn = ():void => {
       if (!isInputInvalid()) {
         const newColumn: Column = {
           id: crypto.randomUUID(),
@@ -47,11 +47,11 @@ const addColumn = taskBoardStore.addColumn
         :isError="isError"
         errorMessage="Please fill out this field."
         placeholder="List name"
-        @keyup.enter="handleAddColumnClick"
+        @keyup.enter="addNewColumn"
       />
       <div class="flex items-center justify-start">
         <button
-          @click="handleAddColumnClick"
+          @click="addNewColumn"
           class="bg-sky-300 text-sky-100 font-bold py-2 px-4 rounded-xl focus:outline-none focus:shadow-outline shadow-md transform hover:bg-sky-400 hover:text-white hover:shadow-lg transition duration-300 ease-in-out mt-1.5 cursor-pointer"
         >
           Add column

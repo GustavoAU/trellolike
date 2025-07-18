@@ -44,7 +44,7 @@ const removeTask = ({columnId,task}: { columnId: string; task: Task }): void => 
   }
 
 const editColumn = (columnID: string, updatedColumn: Column): void => {
-    const columnIndex = columns.value.findIndex(col => col.id === columnID)
+    const columnIndex = columns.value.findIndex(column => column.id === columnID)
     if (columnIndex !== -1) {
       columns.value[columnIndex] = { ...updatedColumn }
     }

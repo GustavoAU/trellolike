@@ -10,7 +10,7 @@ const props = defineProps<{ columnId: string }>()
 const taskBoardStore = useTaskBoard()
 
 const columnDetails = computed(() =>
-  taskBoardStore.getColumns.find(col => col.id === props.columnId)
+  taskBoardStore.getColumns.find(column => column.id === props.columnId)
 )
 
 const isConfirmVisible = ref<boolean>(false)
