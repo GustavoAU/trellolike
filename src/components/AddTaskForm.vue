@@ -21,7 +21,7 @@ const isError = ref<{ inputName: boolean; inputAssignee: boolean; areaComment: b
   inputAssignee: false,
   areaComment: false,
 })
-const isTaskVisible = ref<boolean>(true)
+const isTaskVisible = ref<boolean>(false)
 const taskBoardStore = useTaskBoard()
 const addTask  = taskBoardStore.addTask
 
@@ -72,6 +72,7 @@ const toggleIsTaskIsVisible = (value: boolean):void => {
       :isError="isError.inputName"
       placeholder="Insert task"
       errorMessage="Please fill out this field."
+      @focus="inputName = ''"
     />
 
     <DynamicInput
@@ -102,7 +103,7 @@ const toggleIsTaskIsVisible = (value: boolean):void => {
   <div v-else>
     <button
       @click="toggleIsTaskIsVisible(true)"
-      class="flex hover:bg-primary-lightest py-2 px-4 rounded-xl"
+      class="flex  hover:bg-primary-lightest py-1 px-2 rounded-xl cursor-pointer"
     >
       <PlusIcon class="w-5 mr-2" /> Add task
     </button>

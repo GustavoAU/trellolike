@@ -43,18 +43,25 @@ const removeTask = ({columnId,task}: { columnId: string; task: Task }): void => 
   tasks.value = { ...tasks.value, [columnId]: newColumnsTasks }
   }
 
+const editColumn = (columnID: string, updatedColumn: Column): void => {
+    const columnIndex = columns.value.findIndex(column => column.id === columnID)
+    if (columnIndex !== -1) {
+      columns.value[columnIndex] = { ...updatedColumn }
+    }
+  }
 
 
 
+  return {
+    columns,
+    getColumns,
+    addColumn,
+    removeColumn,
+    addTask,
+    tasks,
+    removeTask,
+    editColumn
+  }
 
-return {
-  columns,
-  getColumns,
-  addColumn,
-  removeColumn,
-  addTask,
-  tasks,
-  removeTask
-}
 
 })

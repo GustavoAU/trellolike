@@ -3,23 +3,23 @@ import ElementHeader from './ElementHeader.vue'
 import { useTaskBoard } from '@/stores/useTaskBoardStore'
 import TaskList from './TaskList.vue'
 import ConfirmationBox from './ConfirmationBox.vue'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 
-type ColumnDetailsProps = {
-  id: string
-  title: string
-}
+const props = defineProps<{ columnId: string }>()
+const taskBoardStore = useTaskBoard()
 
-const { columnDetails } = defineProps<{ columnDetails: ColumnDetailsProps }>()
+const columnDetails = computed(() =>
+  taskBoardStore.getColumns.find(column => column.id === props.columnId)
+)
 
 const isConfirmVisible = ref<boolean>(false)
-
-const taskBoardStore = useTaskBoard()
 const removeColumn  = taskBoardStore.removeColumn
 
 const confirmRemove = ():void => {
-  removeColumn(columnDetails.id)
+  if (columnDetails.value) {
+    removeColumn(columnDetails.value.id)
+  }
   isConfirmVisible.value = false
 }
 
@@ -30,23 +30,29 @@ const handleRemoveRequest = ():void => {
   isConfirmVisible.value = true
 }
 
+const handleEditColumn = (payload: {title:string}):void => {
+  if (columnDetails.value) {
+    taskBoardStore.editColumn(columnDetails.value.id, {
+      id: columnDetails.value.id,
+      title: payload.title })
+  }
+}
 </script>
 
 <template>
-
   <div
-    class="SingleColumn flex flex-col mx-4 w-80 px-4 py-2 bg-primary-light rounded-2xl shadow-md transform hover:shadow-xl transition duration-300 ease-in-out"
-  >
+    v-if="columnDetails"
+    class="SingleColumn flex flex-col mx-4 w-80 px-4 py-2 bg-primary-light rounded-2xl shadow-md transform hover:shadow-xl transition duration-300 ease-in-out">
     <div class="p-2">
       <ElementHeader
-        :title="`${columnDetails.title}`"
+        :type="'column'"
+        :title="columnDetails?.title"
         @remove="handleRemoveRequest"
+        @editColumn="handleEditColumn"
       />
-      <TaskList :columnId="columnDetails.id" />
-    <transition
-        name="fade-scale"
-        appear
-      >
+    </div>
+    <TaskList :columnId="columnDetails?.id" />
+    <transition name="fade-scale" appear>
       <ConfirmationBox
         v-if="isConfirmVisible"
         title="Are you sure?"
@@ -55,8 +61,6 @@ const handleRemoveRequest = ():void => {
         @cancel="cancelRemove"
       />
     </transition>
-
-    </div>
   </div>
 </template>
 
