@@ -43,7 +43,7 @@ const handleEditColumn = (payload: {title:string}):void => {
   <div
     v-if="columnDetails"
     class="SingleColumn flex flex-col mx-4 w-80 px-4 py-2 bg-primary-light rounded-2xl shadow-md transform hover:shadow-xl transition duration-300 ease-in-out">
-    <div class="p-2">
+    <div class="py-2">
       <ElementHeader
         :type="'column'"
         :title="columnDetails?.title"

@@ -66,7 +66,7 @@ const toggleIsTaskIsVisible = (value: boolean):void => {
 
 
 <template>
-  <div v-if="isTaskVisible" class="AddTaskForm mt-20">
+  <div v-if="isTaskVisible" class="AddTaskForm">
     <DynamicInput
       v-model="inputName"
       :isError="isError.inputName"

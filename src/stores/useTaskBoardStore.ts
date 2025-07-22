@@ -44,12 +44,20 @@ const removeTask = ({columnId,task}: { columnId: string; task: Task }): void => 
   }
 
 const editColumn = (columnID: string, updatedColumn: Column): void => {
-    const columnIndex = columns.value.findIndex(column => column.id === columnID)
+  const columnIndex = columns.value.findIndex(column => column.id === columnID)
     if (columnIndex !== -1) {
       columns.value[columnIndex] = { ...updatedColumn }
     }
   }
 
+const editTask =(columnId: string, taskId: string, updatedTask: Task): void => {
+  const columnTasks = tasks.value[columnId]
+  const taskIndex = columnTasks.findIndex(task => task.id === taskId)
+  if (taskIndex !== -1) {
+    columnTasks[taskIndex] = { ...updatedTask }
+    tasks.value = { ...tasks.value, [columnId]: columnTasks }
+  }
+}
 
 
   return {
@@ -60,7 +68,8 @@ const editColumn = (columnID: string, updatedColumn: Column): void => {
     addTask,
     tasks,
     removeTask,
-    editColumn
+    editColumn,
+    editTask
   }
 
 
