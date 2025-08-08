@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import DynamicInput from './DynamicInput.vue'
 import { PlusIcon, XMarkIcon } from '@heroicons/vue/24/solid'
 import { useTaskBoard } from '@/stores/useTaskBoardStore'
+import CustomButton from './CustomButton.vue'
 
 type Task = {
   id: string
@@ -23,11 +24,9 @@ const isError = ref<{ inputName: boolean; inputAssignee: boolean; areaComment: b
 })
 const isTaskVisible = ref<boolean>(false)
 const taskBoardStore = useTaskBoard()
-const addTask  = taskBoardStore.addTask
+const addTask = taskBoardStore.addTask
 
-
-
-const handleAddTaskClick = (columnId: string):void => {
+const handleAddTaskClick = (columnId: string): void => {
   if (isInputInvalid()) {
     return
   }
@@ -38,32 +37,25 @@ const handleAddTaskClick = (columnId: string):void => {
     comment: areaComment.value,
   }
 
-  addTask({columnId, task: newTask})
+  addTask({ columnId, task: newTask })
   inputName.value = ''
   inputAssignee.value = ''
   areaComment.value = ''
-};
+}
 
-
-const isInputInvalid = ():boolean => {
+const isInputInvalid = (): boolean => {
   isError.value = {
     inputName: inputName.value.trim().length === 0,
     inputAssignee: inputAssignee.value.trim().length === 0,
     areaComment: areaComment.value.trim().length === 0,
   }
-  return (
-    isError.value.inputName ||
-    isError.value.inputAssignee ||
-    isError.value.areaComment
-  )
+  return isError.value.inputName || isError.value.inputAssignee || isError.value.areaComment
 }
 
-const toggleIsTaskIsVisible = (value: boolean):void => {
+const toggleIsTaskIsVisible = (value: boolean): void => {
   isTaskVisible.value = value
 }
 </script>
-
-
 
 <template>
   <div v-if="isTaskVisible" class="AddTaskForm">
@@ -89,24 +81,22 @@ const toggleIsTaskIsVisible = (value: boolean):void => {
       variant="textarea"
       placeholder="Place a comment"
     />
-    <div class="flex">
-      <button
-        @click="handleAddTaskClick(columnId)"
-        class="bg-sky-400 text-sky-100 font-bold py-2 px-4 rounded-xl focus:outline-none focus:shadow-outline shadow-md transform hover:bg-sky-500 hover:text-white hover:shadow-lg transition duration-300 ease-in-out mb-4 cursor-pointer">
-        Add Task
-      </button>
+    <div class="flex mb-4 items-center justify-start">
+      <template> </template>
+      <CustomButton @click="handleAddTaskClick(columnId)">
+        <p>Add Task</p>
+      </CustomButton>
       <button @click="toggleIsTaskIsVisible(false)" class="cursor-pointer">
-        <XMarkIcon class="w-6 ml-2 mb-4 text-center" />
+        <XMarkIcon class="w-6 ml-2 text-center" />
       </button>
     </div>
   </div>
   <div v-else>
     <button
       @click="toggleIsTaskIsVisible(true)"
-      class="flex  hover:bg-primary-lightest py-1 px-2 rounded-xl cursor-pointer"
+      class="flex hover:bg-primary-lightest py-1 px-2 rounded-xl cursor-pointer"
     >
       <PlusIcon class="w-5 mr-2" /> Add task
     </button>
   </div>
 </template>
-

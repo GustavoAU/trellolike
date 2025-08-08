@@ -5,36 +5,36 @@ import TaskList from './TaskList.vue'
 import ConfirmationBox from './ConfirmationBox.vue'
 import { ref, computed } from 'vue'
 
-
 const props = defineProps<{ columnId: string }>()
 const taskBoardStore = useTaskBoard()
 
 const columnDetails = computed(() =>
-  taskBoardStore.getColumns.find(column => column.id === props.columnId)
+  taskBoardStore.getColumns.find((column) => column.id === props.columnId),
 )
 
 const isConfirmVisible = ref<boolean>(false)
-const removeColumn  = taskBoardStore.removeColumn
+const removeColumn = taskBoardStore.removeColumn
 
-const confirmRemove = ():void => {
+const confirmRemove = (): void => {
   if (columnDetails.value) {
     removeColumn(columnDetails.value.id)
   }
   isConfirmVisible.value = false
 }
 
-const cancelRemove = ():void => {
+const cancelRemove = (): void => {
   isConfirmVisible.value = false
 }
-const handleRemoveRequest = ():void => {
+const handleRemoveRequest = (): void => {
   isConfirmVisible.value = true
 }
 
-const handleEditColumn = (payload: {title:string}):void => {
+const handleEditColumn = (payload: { title: string }): void => {
   if (columnDetails.value) {
     taskBoardStore.editColumn(columnDetails.value.id, {
       id: columnDetails.value.id,
-      title: payload.title })
+      title: payload.title,
+    })
   }
 }
 </script>
@@ -42,10 +42,12 @@ const handleEditColumn = (payload: {title:string}):void => {
 <template>
   <div
     v-if="columnDetails"
-    class="SingleColumn flex flex-col mx-4 w-80 px-4 py-2 bg-primary-light rounded-2xl shadow-md transform hover:shadow-xl transition duration-300 ease-in-out">
+    class="SingleColumn flex flex-col mx-4 w-80 px-4 py-2 bg-primary-light rounded-2xl shadow-md transform hover:shadow-xl transition duration-300 ease-in-out"
+  >
     <div class="py-2">
       <ElementHeader
-        :type="'column'"
+        :variant="'column'"
+        :isOpen="false"
         :title="columnDetails?.title"
         @remove="handleRemoveRequest"
         @editColumn="handleEditColumn"
@@ -75,7 +77,4 @@ const handleEditColumn = (payload: {title:string}):void => {
   opacity: 0;
   transform: scale(0.95);
 }
-
 </style>
-
-
