@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import ColumnForm from './components/ColumnForm.vue';
-import ColumnList from './components/ColumnList.vue';
+import ColumnForm from './components/ColumnForm.vue'
+import ColumnList from './components/ColumnList.vue'
 </script>
 
 <template>
-<main>
+  <main>
     <div class="flex items-start ml-2 mt-12">
       <div>
         <ColumnList />
@@ -13,7 +13,5 @@ import ColumnList from './components/ColumnList.vue';
         <ColumnForm />
       </div>
     </div>
-</main>
+  </main>
 </template>
-
-

@@ -1,111 +1,163 @@
 <script setup lang="ts">
+import { TrashIcon } from '@heroicons/vue/24/outline'
 import { ref } from 'vue'
-import { PencilIcon, TrashIcon, CheckIcon, XMarkIcon } from '@heroicons/vue/24/outline'
-
-type EditEvents =
-  | {type: 'editColumn'; payload: { title: string }}
-  | {type: 'editTask'; payload:{title: string, assignee:string, comment: string }}
-
-const emit = defineEmits<{
-  (e: 'editColumn', payload: { title: string }): void
-  (e: 'editTask', payload: { title: string; assignee: string; comment: string }): void
-  (e: 'remove'): void
-
-  }>()
+import { PencilIcon } from '@heroicons/vue/24/outline'
+import ModalLayout from './ModalLayout.vue'
+import AddButton from './CustomButton.vue'
+import DynamicInput from './DynamicInput.vue'
 
 const props = defineProps<{
   title: string
-  type: 'column' | 'task'
   task?: {
+    id: string
     title: string
-    assignee?: string
-    comment?: string
+    assignee: string
+    comment: string
   }
+  isOpen: boolean
+  variant: 'column' | 'task'
 }>()
 
-const isEditing = ref<boolean>(false)
+const emit = defineEmits<{
+  (e: 'close'): void
+  (e: 'editColumn', payload: { title: string }): void
+  (e: 'editTask', payload: { title: string; assignee: string; comment: string }): void
+  (e: 'remove'): void
+}>()
+
+const isModalOpen = ref<boolean>(false)
 const editedTitle = ref<string>(props.title)
-const editedAssignee = ref<string>(props.task?.assignee ?? '')
-const editedComment = ref<string>(props.task?.comment ?? '')
+const editedAssignee = ref<string>(props.task?.assignee || '')
+const editedComment = ref<string>(props.task?.comment || '')
+const isError = ref({} as Record<string, boolean>)
 
-
-
-const startEdit = ():void => {
-  isEditing.value = true
-  editedTitle.value = props.title
-  if (props.type === 'task') {
-    editedAssignee.value = props.task?.assignee ?? ''
-    editedComment.value = props.task?.comment ?? ''
+const isErrorColumn = () => {
+  const titleError = editedTitle.value.trim().length === 0
+  isError.value = {
+    editedTitle: titleError,
   }
-
+  return titleError
 }
 
-const saveEdit = (): void => {
-  if (props.type === 'column') {
-    const eventObj: Extract<EditEvents, { type: 'editColumn' }> = {
-      type: 'editColumn',
-      payload: { title: editedTitle.value }
-    }
-    emit(eventObj.type, eventObj.payload)
-  } else if (props.type === 'task') {
-    const eventObj: Extract<EditEvents, { type: 'editTask' }> = {
-      type: 'editTask',
-      payload: {
-        title: editedTitle.value,
-        assignee: editedAssignee.value,
-        comment: editedComment.value
-      }
-    }
-    emit(eventObj.type, eventObj.payload)
+const isErrorTask = () => {
+  const titleError = editedTitle.value.trim().length === 0
+  const assigneeError = editedAssignee.value.trim().length === 0
+  const commentError = editedComment.value.trim().length === 0
+
+  isError.value = {
+    editedTitle: titleError,
+    editedAssignee: assigneeError,
+    editedComment: commentError,
   }
 
-  isEditing.value = false
+  return titleError || assigneeError || commentError
 }
 
-const cancelEdit = ():void => {
-  isEditing.value = false
+const isInputInvalid = (): boolean => {
+  return props.variant === 'column' ? isErrorColumn() : isErrorTask()
+}
+
+const startEdit = (): void => {
   editedTitle.value = props.title
+  editedAssignee.value = props.task?.assignee || ''
+  editedComment.value = props.task?.comment || ''
+
+  isError.value =
+    props.variant === 'column'
+      ? { editedTitle: false }
+      : {
+          editedTitle: false,
+          editedAssignee: false,
+          editedComment: false,
+        }
+  isModalOpen.value = true
+}
+
+const closeModal = (): void => {
+  isModalOpen.value = false
+}
+
+const handleSave = (): void => {
+  if (isInputInvalid()) {
+    return
+  }
+
+  if (props.variant === 'column') {
+    emit('editColumn', { title: editedTitle.value })
+  } else if (props.variant === 'task') {
+    emit('editTask', {
+      title: editedTitle.value,
+      assignee: editedAssignee.value,
+      comment: editedComment.value,
+    })
+  }
+  isModalOpen.value = false
 }
 </script>
 
 <template>
-  <div class="ElementHeader flex justify-between items-center">
-    <div class="flex items-center gap-2">
-      <template v-if="!isEditing">
-        <h3
-          class="text-gray-800 font-bold cursor-pointer ml-1"
-          @dblclick="startEdit"
-        >
-          {{ props.title }}
+  <div class="ElementHeader">
+    <div class="flex justify-between items-center mb-2">
+      <div class="flex items-center gap-2">
+        <h3 class="text-gray-800 font-bold cursor-pointer ml-1 truncate">
+          {{ title }}
         </h3>
+      </div>
 
-      </template>
-      <template v-else>
-        <input
-          v-model="editedTitle"
-          id="column-title-input"
-          name="column-title"
-          class="bg-white border-1 border-blue-300 text-gray-800 rounded-xl focus:outline-blue-500 px-2 py-1"
-          @keyup.enter="saveEdit"
+      <div class="flex items-center gap-2">
+        <div>
+          <button @click="startEdit" class="cursor-pointer">
+            <PencilIcon class="w-5 h-5" />
+          </button>
 
-        />
-        <button @click="saveEdit" class="cursor-pointer" title="Save">
-          <CheckIcon class="w-4" />
+          <ModalLayout :isOpen="isModalOpen" @close="closeModal" @keyup.escape="closeModal">
+            <template #default>
+              <div class="flex flex-col gap-2 p-4">
+                <div v-if="variant === 'column'">
+                  <h2 class="mb-2 text-xl font-semibold">Edit Column Here</h2>
+                  <DynamicInput
+                    v-model="editedTitle"
+                    :isError="isError.editedTitle"
+                    placeholder="edit title"
+                    errorMessage="Please fill out this field."
+                    @focus="editedTitle = ''"
+                  />
+                </div>
+                <div v-else-if="variant === 'task'" class="relative">
+                  <h2 class="mb-2 text-xl font-semibold">Edit Task Here</h2>
+                  <DynamicInput
+                    v-model="editedTitle"
+                    :isError="isError.editedTitle"
+                    placeholder="edit title"
+                    errorMessage="Please fill out this field."
+                    @focus="editedTitle = ''"
+                  />
+                  <DynamicInput
+                    v-model="editedAssignee"
+                    :isError="isError.editedAssignee"
+                    placeholder="edit assignee"
+                    errorMessage="Please fill out this field."
+                  />
+                  <DynamicInput
+                    v-model="editedComment"
+                    :isError="isError.editedComment"
+                    placeholder="edit comment"
+                    errorMessage="Please fill out this field."
+                    variant="textarea"
+                  />
+                </div>
+                <div class="flex gap-2 justify-between">
+                  <AddButton variant="outline" @click="closeModal"> Cancel </AddButton>
+                  <AddButton @click="handleSave"> Save </AddButton>
+                </div>
+              </div>
+            </template>
+          </ModalLayout>
+        </div>
+        <button @click="$emit('remove')" title="Delete">
+          <TrashIcon class="w-5 h-5 cursor-pointer" />
         </button>
-        <button @click="cancelEdit" class="cursor-pointer" title="Cancel">
-          <XMarkIcon class="w-4" />
-        </button>
-      </template>
-    </div>
-    <div class="flex items-center gap-2">
-      <button v-if="!isEditing" @click="startEdit" class="cursor-pointer" title="Edit column">
-        <PencilIcon class="w-4" />
-      </button>
-      <button v-if="!isEditing" @click="$emit('remove')" class="cursor-pointer" title="Delete column">
-        <TrashIcon class="w-4" />
-      </button>
+      </div>
     </div>
   </div>
 </template>
-
-
