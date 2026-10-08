@@ -1,5 +1,5 @@
 {
-  "name": "prueba-vue",
+  "name": "trellolike",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -12,7 +12,9 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
-    "format": "prettier --write src/"
+    "lint:check": "eslint .",
+    "format": "prettier --write src/",
+    "format:check": "prettier --check src/ e2e/"
   },
   "dependencies": {
     "@heroicons/vue": "^2.2.0",
