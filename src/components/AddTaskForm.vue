@@ -64,7 +64,6 @@ const toggleIsTaskIsVisible = (value: boolean): void => {
       :isError="isError.inputName"
       placeholder="Insert task"
       errorMessage="Please fill out this field."
-      @focus="inputName = ''"
     />
 
     <DynamicInput
@@ -82,11 +81,14 @@ const toggleIsTaskIsVisible = (value: boolean): void => {
       placeholder="Place a comment"
     />
     <div class="flex mb-4 items-center justify-start">
-      <template> </template>
       <CustomButton @click="handleAddTaskClick(columnId)">
         <p>Add Task</p>
       </CustomButton>
-      <button @click="toggleIsTaskIsVisible(false)" class="cursor-pointer">
+      <button
+        @click="toggleIsTaskIsVisible(false)"
+        class="cursor-pointer"
+        aria-label="Cancel new task"
+      >
         <XMarkIcon class="w-6 ml-2 text-center" />
       </button>
     </div>

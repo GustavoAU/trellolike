@@ -51,7 +51,11 @@ const isInputInvalid = (): boolean => {
         <CustomButton @click="addNewColumn">
           <p>Add Column</p>
         </CustomButton>
-        <button @click="toggleIsFormVisible(false)" class="cursor-pointer">
+        <button
+          @click="toggleIsFormVisible(false)"
+          class="cursor-pointer"
+          aria-label="Cancel new list"
+        >
           <XMarkIcon class="w-6 ml-2 text-center" />
         </button>
       </div>

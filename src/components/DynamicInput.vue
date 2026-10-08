@@ -30,6 +30,8 @@ const updateValue = (value: string) => {
       :value="modelValue"
       @input="updateValue(($event.target as HTMLInputElement).value)"
       :placeholder="placeholder"
+      :aria-label="placeholder"
+      :aria-invalid="isError"
     />
 
     <textarea
@@ -38,9 +40,11 @@ const updateValue = (value: string) => {
       :value="props.modelValue"
       @input="updateValue(($event.target as HTMLTextAreaElement).value)"
       :placeholder="props.placeholder"
+      :aria-label="props.placeholder"
+      :aria-invalid="props.isError"
     ></textarea>
 
-    <p class="absolute text-red-500" v-if="props.isError">
+    <p class="absolute text-red-500" v-if="props.isError" role="alert">
       {{ props.errorMessage }}
     </p>
   </div>

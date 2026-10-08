@@ -106,7 +106,7 @@ const handleSave = (): void => {
 
       <div class="flex items-center gap-2">
         <div>
-          <button @click="startEdit" class="cursor-pointer">
+          <button @click="startEdit" class="cursor-pointer" :aria-label="`Edit ${title}`">
             <PencilIcon class="w-5 h-5" />
           </button>
 
@@ -120,7 +120,6 @@ const handleSave = (): void => {
                     :isError="isError.editedTitle"
                     placeholder="edit title"
                     errorMessage="Please fill out this field."
-                    @focus="editedTitle = ''"
                   />
                 </div>
                 <div v-else-if="variant === 'task'" class="relative">
@@ -130,7 +129,6 @@ const handleSave = (): void => {
                     :isError="isError.editedTitle"
                     placeholder="edit title"
                     errorMessage="Please fill out this field."
-                    @focus="editedTitle = ''"
                   />
                   <DynamicInput
                     v-model="editedAssignee"
@@ -154,7 +152,7 @@ const handleSave = (): void => {
             </template>
           </ModalLayout>
         </div>
-        <button @click="$emit('remove')" title="Delete">
+        <button @click="$emit('remove')" title="Delete" :aria-label="`Delete ${title}`">
           <TrashIcon class="w-5 h-5 cursor-pointer" />
         </button>
       </div>
